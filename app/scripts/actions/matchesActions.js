@@ -1,4 +1,7 @@
 import Reflux from 'reflux';
+import request from 'superagent';
+import Config from '../config';
+
 
 const MatchesActions = Reflux.createActions({
   'loadMatches': {children: ['completed', 'failed']}
@@ -26,6 +29,15 @@ MatchesActions.loadMatches.listen(function(){
       away: 'EDM Oilers',
     }];
     this.completed(items);
+
+    let matches;
+    request
+      .get(Config.END_POINT + '/listedesmatchs')
+      .then((response) => {
+        console.log(response);
+        matches = response;
+      });
+    //this.completed(matches);
 
     // on error
     // this.failed('an error occured');
