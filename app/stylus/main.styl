@@ -1,0 +1,102 @@
+@import 'normalize'
+@import 'helper'
+
+/* variables */
+$lightgrey = #999
+$linkColor = #555
+$grey = #eee
+$black = #222
+$white = #f7f7f7
+
+html
+button
+input
+select
+textarea
+  color: $black
+
+a
+a:visited
+  color: $linkColor
+  text-decoration: none
+
+a:hover
+  color: lighten($linkColor,10%)
+
+body
+  color: $black
+  font-size: 1em
+  line-height: 1.5
+
+.match
+  padding: 10px
+  border: solid 1px blue
+
+
+
+.buttonRow
+  text-align: center
+  font-size: 1.8em
+
+.buttonHockey
+    color: #555;
+    text-decoration: none;
+    border: 1px solid blue;
+    border-radius: 7px;
+    padding: 15px;
+
+.matchContainer
+  display: flex
+  flex-direction: column
+
+.teamNames
+  display: flex
+.teamScores
+  display: flex
+
+.time
+  text-align: center
+  font-size: 1.8em
+  padding: 20px
+
+.home
+  flex: 1
+  text-align: center
+  font-size: 1.5em
+
+.away
+  flex: 1
+  text-align: center
+  font-size: 1.5em
+
+.homeScore
+  flex: 1
+  text-align: center
+  font-size: 1.5em
+
+
+.awayScore
+  flex: 1
+  text-align: center
+  font-size: 1.5em
+
+
+
+header
+  background: $grey
+  color:$black
+  padding: 1em
+
+  nav
+    float:right
+    user-select:none
+
+  .nav-item
+    float:left
+    margin-left:.5em
+
+    a.active
+      text-decoration:underline
+
+.content
+  padding: 1em
