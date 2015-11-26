@@ -6,6 +6,29 @@ let MatchStore = Reflux.createStore({
 
   init() {
     this.match = null;
+    this.paris = [];
+  },
+
+  loadParis() {
+    this.trigger({
+      loading: true
+    });
+  },
+
+  loadParisCompleted(paris) {
+    this.paris = paris;
+
+    this.trigger({
+      paris : this.paris,
+      loading: false
+    });
+  },
+
+  loadParisFailed(error) {
+    this.trigger({
+      error : error,
+      loading: false
+    });
   },
 
   loadMatch(id) {

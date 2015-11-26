@@ -3,7 +3,8 @@ import request from 'superagent';
 import Config from '../config';
 
 const MatchActions = Reflux.createActions({
-  'loadMatch': {children: ['completed', 'failed']}
+  'loadMatch': {children: ['completed', 'failed']},
+  'loadParis': {children: ['completed', 'failed']}
 });
 
 MatchActions.loadMatch.listen(function(id){
@@ -17,4 +18,13 @@ MatchActions.loadMatch.listen(function(id){
     });
 });
 
+MatchActions.loadParis.listen(function(){
+  var paris;
+  request
+    .get(Config.END_POINT + '/ift604REST/ift604rest/paris')
+    .then((response) => {
+      paris = response.body;
+      this.completed(paris);
+    });
+});
 export default MatchActions;
