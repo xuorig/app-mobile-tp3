@@ -15,7 +15,17 @@ let MatchesStore = Reflux.createStore({
   },
 
   loadMatchesCompleted(matches) {
-    this.matches = matches;
+    let array_matches;
+    console.log(matches);
+    if (matches) {
+      array_matches = Object.keys(matches).map(function(key) {
+        return matches[key];
+      });
+    } else {
+      array_matches = []
+    }
+    console.log(array_matches);
+    this.matches = array_matches;
 
     this.trigger({
       matches : this.matches,

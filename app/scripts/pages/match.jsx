@@ -9,24 +9,30 @@ class Match extends React.Component {
     super(props);
     this.state = {
       id: null,
-      match : [],
+      match : null,
       loading: false
     };
+    this.timer = null;
   }
 
   onRefresh(e) {
-    e.preventDefault();
+    if (e) {
+      e.preventDefault();
+    }
     console.log("Refresh");
     MatchActions.loadMatch(this.props.params.id);
   }
 
   componentDidMount() {
-    this.unsubscribe = MatchStore.listen(this.onStatusChange.bind(this));
+    this.unsubscribe = MatchStore.listen(this.onStatusChange.bind(this)).bind(this);
     MatchActions.loadMatch(this.props.params.id);
+    // Fetch match every 2 minutes
+    this.timer = setInterval(this.onRefresh.bind(this), 5000);
   }
 
   componentWillUnmount() {
     this.unsubscribe();
+    clearInterval(this.timer);
   }
 
   onStatusChange(state) {
@@ -36,29 +42,49 @@ class Match extends React.Component {
   render() {
     console.log(this.state.match)
     let match = this.state.match;
-    let events = match.evenements ?
-                 this.state.match.evenements.map(item => <li key={item}>{item}</li>) :
-                 null;
+
+    if (!this.state.match) {
+      return (
+        <div>macaca</div>
+      )
+    }
+
+    let penalties = this.state.match.penalties.map((pen) => {
+      return <li>{pen.team.name} - #{pen.player.number} {pen.player.name}</li>
+    })
+
+    let goals = this.state.match.goals.map((pen) => {
+      return <li>{pen.team.name} - #{pen.player.number} {pen.player.name}</li>
+    })
+
+    let seconds = (this.state.match.period === 3 && this.state.match.clock <= 0) ?
+        <div>Game Over</div> : <div>{this.state.match.clock} seconds left</div>
 
     return (
       <div>
       <div className="matchContainer">
         <div className="teamNames">
-          <div className="home">{this.state.match.home}</div>
-          <div className="away">{this.state.match.away}</div>
+          <div className="home">{this.state.match.home.name}</div>
+          <div className="away">{this.state.match.away.name}</div>
         </div>
         <div className="teamScores">
-          <div className="homeScore">{this.state.match.homeScore}</div>
-          <div className="awayScore">{this.state.match.awayScore}</div>
+          <div className="homeScore">{this.state.match.score.home}</div>
+          <div className="awayScore">{this.state.match.score.away}</div>
         </div>
       </div>
       <div className="time">
-        13:00
+        <div>Period {this.state.match.period}</div>
+        {seconds}
       </div>
       <div className="eventContainer">
       <h2>Evenements</h2>
+      <h3>Goals</h3>
       <ul>
-        {events}
+        {goals}
+      </ul>
+      <h3>Penalties</h3>
+      <ul>
+        {penalties}
       </ul>
       </div>
       <div className="buttonRow">

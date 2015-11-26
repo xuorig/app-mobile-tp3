@@ -2,7 +2,10 @@ import React from 'react';
 import ItemListItem from './itemListItem.jsx';
 
 const ItemList = (props) => {
-    let matches = props.matches.map(item => <ItemListItem key={item.home} match={item}/>),
+    for (var key in props.matches) {
+      console.log(props.matches[key]);
+    }
+    let matches = props.matches.map(item => <ItemListItem key={item.home.name} match={item}/>),
       loading = props.loading ? <div className="loading-label">Loading...</div> : '';
 
     return (

@@ -10,38 +10,16 @@ const MatchesActions = Reflux.createActions({
 MatchesActions.loadMatches.listen(function(){
   // make your api call/ async stuff here
   // we use setTimeout for faking async behaviour here
-  setTimeout(() => {
-    const items = [{
-      id: 1,
-      home: 'MTL Canadiens',
-      away: 'BOS Bruins',
-    }, {
-      id: 2,
-      home: 'DET Red Wings',
-      away: 'TOR Maple Leafs',
-    }, {
-      id: 3,
-      home: 'VAN Canucks',
-      away: 'NY Rangers',
-    }, {
-      id: 4,
-      home: 'SJ Sharks',
-      away: 'EDM Oilers',
-    }];
-    this.completed(items);
 
-    let matches;
-    request
-      .get(Config.END_POINT + '/listedesmatchs')
-      .then((response) => {
-        console.log(response);
-        matches = response;
-      });
-    //this.completed(matches);
-
-    // on error
-    // this.failed('an error occured');
-  }, 500);
+  var matches;
+  request
+    .get(Config.END_POINT + '/ift604REST/ift604rest/listedesmatchs')
+    .then((response) => {
+      console.log(response.body);
+      matches = response.body.matchs;
+      console.log(matches);
+      this.completed(matches);
+    });
 });
 
 export default MatchesActions;

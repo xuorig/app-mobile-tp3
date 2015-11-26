@@ -5,7 +5,7 @@ let MatchStore = Reflux.createStore({
   listenables: MatchActions,
 
   init() {
-    this.match = [];
+    this.match = null;
   },
 
   loadMatch(id) {
