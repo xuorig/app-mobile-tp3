@@ -39,11 +39,18 @@ let MatchStore = Reflux.createStore({
   },
 
   loadMatchCompleted(match) {
+    let oldLength = this.match && this.match.penalties.length + this.match.goals.length;
     this.match = match;
+
+    let newLength = this.match.penalties.length + this.match.goals.length;
+    if (newLength > oldLength) {
+      alert("Nouveaux evenements disponibles!");
+    }
 
     this.trigger({
       match : this.match,
-      loading: false
+      loading: false,
+      penaltiesLength: newLength,
     });
   },
 

@@ -11,19 +11,27 @@ class Home extends React.Component {
       matches : [],
       loading: false
     };
+    this.interval = null;
   }
 
   componentDidMount() {
     this.unsubscribe = MatchesStore.listen(this.onStatusChange.bind(this));
     MatchesActions.loadMatches();
+    this.interval = setInterval(this.onRefresh.bind(this), 5000);
   }
 
   componentWillUnmount() {
     this.unsubscribe();
+    clearInterval(this.interval);
   }
 
   onStatusChange(state) {
     this.setState(state);
+  }
+
+  onRefresh(e) {
+    console.log("REFRESH!");
+    MatchesActions.loadMatches();
   }
 
   render() {
@@ -31,6 +39,7 @@ class Home extends React.Component {
       <div>
         <h1>Liste des matchs</h1>
         <ItemList { ...this.state } />
+        <button onClick={this.onRefresh.bind(this)}>Update</button>
       </div>
     );
   }

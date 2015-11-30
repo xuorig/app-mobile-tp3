@@ -10,7 +10,8 @@ class Match extends React.Component {
     this.state = {
       id: null,
       match : null,
-      loading: false
+      loading: false,
+      penaltiesLength: null,
     };
     this.timer = null;
   }
@@ -45,7 +46,7 @@ class Match extends React.Component {
 
     if (!this.state.match) {
       return (
-        <div>macaca</div>
+        <div>Loading...</div>
       )
     }
 
